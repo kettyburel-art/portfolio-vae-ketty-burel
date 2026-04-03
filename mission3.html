@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 3 - Gestion Juridique | Portfolio VAE Ketty BUREL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bleu-starsnett: #1B4F8A;
+            --jaune-starsnett: #F5C400;
+            --gris-clair: #F5F5F5;
+            --gris-moyen: #E0E0E0;
+            --texte-fonce: #2C3E50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--texte-fonce);
+            background: var(--gris-clair);
+        }
+
+        nav {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--jaune-starsnett);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .mission-header {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .mission-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .section h3 {
+            font-size: 2rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 1.5rem;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .stats-big {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-big {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-big-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--jaune-starsnett);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-big-label {
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: var(--gris-clair);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--jaune-starsnett);
+        }
+
+        .card h4 {
+            color: var(--bleu-starsnett);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card ul {
+            list-style: none;
+        }
+
+        .card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--jaune-starsnett);
+            font-weight: bold;
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .highlight-box {
+            background: #FFF9E6;
+            border-left: 4px solid var(--jaune-starsnett);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box strong {
+            color: var(--bleu-starsnett);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--jaune-starsnett);
+            color: var(--bleu-starsnett);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-box {
+            background: var(--gris-clair);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .process-steps {
+            counter-reset: step;
+        }
+
+        .process-step {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--bleu-starsnett);
+            counter-increment: step;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .process-step::before {
+            content: counter(step);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bleu-starsnett);
+            color: white;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .process-step h5 {
+            color: var(--bleu-starsnett);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--jaune-starsnett);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .mission-header h2 {
+                font-size: 2rem;
+            }
+
+            .two-cols {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-big {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>Portfolio VAE - Ketty BUREL</h1>
+            <ul>
+                <li><a href="portfolio_vae_ketty_burel.html">Accueil</a></li>
+                <li><a href="mission1.html">Mission 1</a></li>
+                <li><a href="mission2.html">Mission 2</a></li>
+                <li><a href="mission3.html">Mission 3</a></li>
+                <li><a href="mission4.html">Mission 4</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="mission-header">
+        <div class="container">
+            <h2>MISSION 3 : Gestion Juridique</h2>
+            <p>Suivi rigoureux de 248K€ de créances et 21 dossiers contentieux</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <h3>Contexte et enjeux</h3>
+            <p>
+                Dans le secteur du nettoyage professionnel, les impayés clients représentent un risque financier 
+                majeur pour la trésorerie. Chez Starsnett Services, je pilote l'intégralité de la gestion 
+                juridique et du recouvrement contentieux, avec la coordination de deux cabinets d'avocats 
+                (Maître Lahiani et E.RECOVE) pour 248K€ de créances et 21 dossiers actifs.
+            </p>
+            <p>
+                Cette mission exige rigueur administrative, sens juridique, capacité de synthèse et coordination 
+                multi-acteurs. Elle illustre ma capacité à gérer des dossiers complexes et sensibles avec un 
+                impact direct sur la santé financière de l'entreprise.
+            </p>
+
+            <div class="stats-big">
+                <div class="stat-big">
+                    <div class="stat-big-number">248K€</div>
+                    <div class="stat-big-label">Créances gérées</div>
+                </div>
+                <div class="stat-big">
+                    <div class="stat-big-number">21</div>
+                    <div class="stat-big-label">Dossiers contentieux actifs</div>
+                </div>
+                <div class="stat-big">
+                    <div class="stat-big-number">2</div>
+                    <div class="stat-big-label">Cabinets d'avocats coordonnés</div>
+                </div>
+                <div class="stat-big">
+                    <div class="stat-big-number">7</div>
+                    <div class="stat-big-label">Audiences Tribunal Commerce Paris</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Responsabilités principales</h3>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Coordination juridique</h4>
+                    <ul>
+                        <li>Interface unique entre Starsnett et les 2 cabinets d'avocats</li>
+                        <li>Transmission des pièces juridiques et documents comptables</li>
+                        <li>Suivi des délais de procédure et échéances</li>
+                        <li>Préparation des audiences (dossiers, pièces justificatives)</li>
+                        <li>Compte-rendu direction post-audience</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Suivi financier</h4>
+                    <ul>
+                        <li>Recensement exhaustif des créances impayées</li>
+                        <li>Classement par ancienneté et priorité</li>
+                        <li>Suivi des recouvrements et encaissements</li>
+                        <li>Actualisation mensuelle du tableau de bord</li>
+                        <li>Alertes direction sur dossiers critiques</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Gestion administrative</h4>
+                    <ul>
+                        <li>Classement chronologique de toutes les pièces</li>
+                        <li>Archivage numérique et papier sécurisé</li>
+                        <li>Historique complet par dossier</li>
+                        <li>Traçabilité totale des actions entreprises</li>
+                        <li>Confidentialité des données sensibles</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Reporting et pilotage</h4>
+                    <ul>
+                        <li>Tableau de bord global actualisé en temps réel</li>
+                        <li>Synthèse mensuelle pour direction et comptable</li>
+                        <li>Analyse risques et opportunités de recouvrement</li>
+                        <li>Priorisation des actions selon urgence</li>
+                        <li>Anticipation besoins trésorerie</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Processus de traitement d'un dossier</h3>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <h5>Identification créance</h5>
+                    <p>Détection impayé, relance client, analyse ancienneté et montant. Décision passage contentieux en coordination avec direction.</p>
+                </div>
+
+                <div class="process-step">
+                    <h5>Constitution dossier</h5>
+                    <p>Rassemblement pièces (contrats, factures, relances, échanges). Préparation synthèse chronologique pour avocat.</p>
+                </div>
+
+                <div class="process-step">
+                    <h5>Transmission cabinet</h5>
+                    <p>Envoi dossier complet à Maître Lahiani ou E.RECOVE selon spécialité. Briefing téléphonique si nécessaire.</p>
+                </div>
+
+                <div class="process-step">
+                    <h5>Suivi procédure</h5>
+                    <p>Échanges réguliers avec avocat, transmission pièces complémentaires, suivi échéances et délais légaux.</p>
+                </div>
+
+                <div class="process-step">
+                    <h5>Préparation audiences</h5>
+                    <p>Constitution dossier physique pour audience, vérification exhaustivité pièces, briefing direction si comparution.</p>
+                </div>
+
+                <div class="process-step">
+                    <h5>Post-audience et suivi</h5>
+                    <p>Compte-rendu décision, mise à jour statut dossier, actions suite jugement (recouvrement, appel, classement).</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Exemple concret :</strong> Tribunal de Commerce de Paris, 7 audiences suivies avec préparation 
+                complète des dossiers, coordination avocats, et reporting direction. Taux de jugement favorable : 85%.
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Application développée : "Suivi Contentieux v2.1"</h3>
+            <p>
+                Face à la complexité de gérer 21 dossiers contentieux simultanément avec des dizaines de pièces 
+                par dossier, j'ai développé une application web dédiée permettant un suivi rigoureux et 
+                exhaustif. Cette application sécurisée est accessible uniquement à 3 utilisateurs (direction, 
+                comptable, office manager) compte tenu de la sensibilité des données.
+            </p>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Fonctionnalités principales</h4>
+                    <ul>
+                        <li>Fiche détaillée par dossier (client, montant, avocat, statut)</li>
+                        <li>Historique chronologique complet des actions</li>
+                        <li>Gestion tâches et échéances quotidiennes</li>
+                        <li>Compteurs audiences et RDV avocats</li>
+                        <li>Tableau de bord financier global</li>
+                        <li>Export et sauvegarde sécurisée</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Architecture technique</h4>
+                    <ul>
+                        <li>Repository GitHub séparé (architecture modulaire)</li>
+                        <li>Accès restreint à 3 utilisateurs autorisés</li>
+                        <li>Stockage local + cloud JSONBin chiffré</li>
+                        <li>Interface responsive mobile/desktop</li>
+                        <li>Version 2.1 : développement itératif</li>
+                        <li>Mise en production automne 2025</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;">
+                    <strong>Application en production depuis automne 2025</strong>
+                </p>
+                <a href="https://starsnettinfo-lab.github.io/Contentieux/" target="_blank" class="cta-button">
+                    🔗 Accéder à l'application Contentieux
+                </a>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.95rem;">
+                    (Accès restreint - Données confidentielles)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Impact mesurable</h3>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Amélioration fiabilité</h4>
+                    <ul>
+                        <li><strong>+100% fiabilité traçabilité</strong> : zéro oubli échéance, zéro pièce manquante</li>
+                        <li><strong>Réduction risque financier</strong> : pilotage actif vs gestion réactive</li>
+                        <li><strong>Visibilité temps réel</strong> : état global dossiers accessible instantanément</li>
+                        <li><strong>Anticipation trésorerie</strong> : prévision encaissements potentiels</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Efficacité opérationnelle</h4>
+                    <ul>
+                        <li>Coordination fluide avec 2 cabinets d'avocats</li>
+                        <li>Préparation audiences complète et rigoureuse</li>
+                        <li>Historique complet facilitant reprises dossiers</li>
+                        <li>Reporting direction simplifié et synthétique</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Résultat concret :</strong> Sur 7 audiences Tribunal de Commerce Paris, 6 jugements 
+                favorables obtenus grâce à la qualité de préparation des dossiers et coordination avocat.
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Compétences mobilisées</h3>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Compétences juridiques et administratives</h4>
+                    <ul>
+                        <li>Compréhension procédures contentieuses</li>
+                        <li>Maîtrise terminologie juridique</li>
+                        <li>Rigueur classification et archivage</li>
+                        <li>Respect délais et échéances légales</li>
+                        <li>Confidentialité et discrétion</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Compétences relationnelles et stratégiques</h4>
+                    <ul>
+                        <li>Coordination multi-acteurs (avocats, comptable, direction)</li>
+                        <li>Communication écrite précise et synthétique</li>
+                        <li>Priorisation selon urgence et enjeux financiers</li>
+                        <li>Anticipation risques et opportunités</li>
+                        <li>Développement outil digital de suivi</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>Ketty BUREL</strong> - Office Manager - Starsnett Services</p>
+            <p>Email : <a href="mailto:kettyburel@gmail.com">kettyburel@gmail.com</a></p>
+            <p style="margin-top: 1rem;"><a href="portfolio_vae_ketty_burel.html">← Retour à l'accueil</a></p>
+        </div>
+    </footer>
+</body>
+</html>

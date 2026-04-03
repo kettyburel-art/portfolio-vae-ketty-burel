@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 2 - Transformation Digitale | Portfolio VAE Ketty BUREL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bleu-starsnett: #1B4F8A;
+            --jaune-starsnett: #F5C400;
+            --gris-clair: #F5F5F5;
+            --gris-moyen: #E0E0E0;
+            --texte-fonce: #2C3E50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--texte-fonce);
+            background: var(--gris-clair);
+        }
+
+        nav {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--jaune-starsnett);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .mission-header {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .mission-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .section h3 {
+            font-size: 2rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 1.5rem;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .app-card {
+            background: var(--gris-clair);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--jaune-starsnett);
+        }
+
+        .app-card h4 {
+            color: var(--bleu-starsnett);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .app-stat {
+            text-align: center;
+        }
+
+        .app-stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--bleu-starsnett);
+        }
+
+        .app-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-item::before {
+            content: "✓";
+            color: var(--jaune-starsnett);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--jaune-starsnett);
+            color: var(--bleu-starsnett);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .tech-stack {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .tech-stack h4 {
+            color: var(--bleu-starsnett);
+            margin-bottom: 1rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tech-tag {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .timeline-dev {
+            background: var(--gris-clair);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .timeline-dev h4 {
+            color: var(--bleu-starsnett);
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-date {
+            min-width: 120px;
+            font-weight: bold;
+            color: var(--bleu-starsnett);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        footer {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--jaune-starsnett);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .mission-header h2 {
+                font-size: 2rem;
+            }
+
+            .app-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>Portfolio VAE - Ketty BUREL</h1>
+            <ul>
+                <li><a href="portfolio_vae_ketty_burel.html">Accueil</a></li>
+                <li><a href="mission1.html">Mission 1</a></li>
+                <li><a href="mission2.html">Mission 2</a></li>
+                <li><a href="mission3.html">Mission 3</a></li>
+                <li><a href="mission4.html">Mission 4</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="mission-header">
+        <div class="container">
+            <h2>MISSION 2 : Transformation Digitale</h2>
+            <p>Conception et développement de 3 applications métier en production</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <h3>Vision et contexte</h3>
+            <p>
+                Face aux limites des outils traditionnels (Excel, fichiers papier) pour gérer une activité 
+                croissante, j'ai identifié le besoin de digitaliser l'ensemble des processus opérationnels, 
+                juridiques et commerciaux de Starsnett Services. Sans formation initiale en développement web, 
+                j'ai appris en autodidacte les technologies nécessaires pour concevoir et développer trois 
+                applications métier complètes, aujourd'hui en production et utilisées quotidiennement.
+            </p>
+            <p>
+                Cette démarche de transformation digitale illustre ma capacité à identifier des besoins métier, 
+                à acquérir de nouvelles compétences techniques et à mener à bien des projets complexes de A à Z.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Les 3 applications développées</h3>
+
+            <!-- APP 1 -->
+            <div class="app-card">
+                <h4>Application 1 : "Qui est où ?"</h4>
+                <p class="subtitle">Gestion opérationnelle temps réel - En production depuis mars 2025</p>
+                
+                <p>
+                    Application centrale de pilotage de l'activité terrain permettant la coordination de 167 sites 
+                    clients et 28 agents. Progressive Web App accessible sur mobile et desktop, utilisée 
+                    quotidiennement par 4 utilisateurs (direction, comptable, responsables terrain).
+                </p>
+
+                <div class="app-stats">
+                    <div class="app-stat">
+                        <div class="app-stat-number">167</div>
+                        <div class="app-stat-label">Sites clients</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">28</div>
+                        <div class="app-stat-label">Agents gérés</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">6</div>
+                        <div class="app-stat-label">Modules fonctionnels</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">4</div>
+                        <div class="app-stat-label">Utilisateurs actifs</div>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-item">Planning quotidien des interventions</div>
+                    <div class="feature-item">Gestion complète des 167 sites</div>
+                    <div class="feature-item">Gestion des 28 profils agents</div>
+                    <div class="feature-item">Module vitrerie (35 sites spécialisés)</div>
+                    <div class="feature-item">Indicateurs comptables (CA, marges)</div>
+                    <div class="feature-item">Authentification sécurisée PIN</div>
+                    <div class="feature-item">Synchronisation cloud optionnelle</div>
+                    <div class="feature-item">Interface responsive mobile/desktop</div>
+                </div>
+
+                <a href="https://starsnettinfo-lab.github.io/Starsnett/" target="_blank" class="cta-button">
+                    🔗 Accéder à l'application "Qui est où ?"
+                </a>
+            </div>
+
+            <!-- APP 2 -->
+            <div class="app-card">
+                <h4>Application 2 : "Suivi Contentieux v2.1"</h4>
+                <p class="subtitle">Gestion juridique et financière - En production depuis automne 2025</p>
+                
+                <p>
+                    Application dédiée au suivi rigoureux de 248K€ de créances et 21 dossiers contentieux, 
+                    avec coordination de 2 cabinets d'avocats. Accès restreint à 3 utilisateurs (direction, 
+                    comptable, office manager) pour garantir la confidentialité des données sensibles.
+                </p>
+
+                <div class="app-stats">
+                    <div class="app-stat">
+                        <div class="app-stat-number">248K€</div>
+                        <div class="app-stat-label">Créances gérées</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">21</div>
+                        <div class="app-stat-label">Dossiers contentieux</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">2</div>
+                        <div class="app-stat-label">Cabinets d'avocats</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">3</div>
+                        <div class="app-stat-label">Utilisateurs autorisés</div>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-item">Fiche détaillée par dossier</div>
+                    <div class="feature-item">Historique chronologique complet</div>
+                    <div class="feature-item">Suivi actions et échéances</div>
+                    <div class="feature-item">Coordination cabinets d'avocats</div>
+                    <div class="feature-item">Tableau de bord financier</div>
+                    <div class="feature-item">Gestion tâches quotidiennes</div>
+                    <div class="feature-item">Compteur audiences/RDV</div>
+                    <div class="feature-item">Architecture modulaire sécurisée</div>
+                </div>
+
+                <a href="https://starsnettinfo-lab.github.io/Contentieux/" target="_blank" class="cta-button">
+                    🔗 Accéder à l'application Contentieux
+                </a>
+            </div>
+
+            <!-- APP 3 -->
+            <div class="app-card">
+                <h4>Application 3 : "Starsnett Devis"</h4>
+                <p class="subtitle">Automatisation commerciale - Développée mars 2026, déploiement mai 2026</p>
+                
+                <p>
+                    Application de génération automatisée de devis avec signature électronique, développée en 
+                    925 lignes de code. Permet aux commerciaux de créer des devis professionnels en quelques 
+                    minutes, avec envoi par email/WhatsApp et suivi des signatures. Formation équipe prévue 
+                    le 25 avril 2026, déploiement tablettes terrain mai 2026.
+                </p>
+
+                <div class="app-stats">
+                    <div class="app-stat">
+                        <div class="app-stat-number">90+</div>
+                        <div class="app-stat-label">Prestations</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">925</div>
+                        <div class="app-stat-label">Lignes de code</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">2</div>
+                        <div class="app-stat-label">Utilisateurs commerciaux</div>
+                    </div>
+                    <div class="app-stat">
+                        <div class="app-stat-number">-85%</div>
+                        <div class="app-stat-label">Temps création devis</div>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-item">Catalogue 90+ prestations</div>
+                    <div class="feature-item">Signature électronique intégrée</div>
+                    <div class="feature-item">Génération PDF automatique</div>
+                    <div class="feature-item">Envoi email/WhatsApp</div>
+                    <div class="feature-item">Numérotation automatique devis</div>
+                    <div class="feature-item">Onglets Particuliers/Professionnels</div>
+                    <div class="feature-item">Affichage RIB BNP</div>
+                    <div class="feature-item">Stockage cloud signatures (JSONBin)</div>
+                </div>
+
+                <a href="https://starsnettinfo-lab.github.io/starsnett-devis/" target="_blank" class="cta-button">
+                    🔗 Accéder à l'application Devis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Compétences techniques développées</h3>
+            
+            <div class="tech-stack">
+                <h4>Technologies maîtrisées</h4>
+                <div class="tech-tags">
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">JavaScript vanilla</span>
+                    <span class="tech-tag">LocalStorage API</span>
+                    <span class="tech-tag">JSONBin API</span>
+                    <span class="tech-tag">EmailJS</span>
+                    <span class="tech-tag">Nominatim (géolocalisation)</span>
+                    <span class="tech-tag">Responsive Design</span>
+                    <span class="tech-tag">Progressive Web App</span>
+                    <span class="tech-tag">GitHub Pages</span>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h4>Compétences projet</h4>
+                <div class="tech-tags">
+                    <span class="tech-tag">Analyse besoins métier</span>
+                    <span class="tech-tag">Architecture logicielle</span>
+                    <span class="tech-tag">Développement full-stack</span>
+                    <span class="tech-tag">Tests et débogage</span>
+                    <span class="tech-tag">Documentation</span>
+                    <span class="tech-tag">Formation utilisateurs</span>
+                    <span class="tech-tag">Gestion versions (Git)</span>
+                    <span class="tech-tag">Amélioration continue</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Timeline du développement</h3>
+            
+            <div class="timeline-dev">
+                <h4>14 mois de développement continu (mars 2025 - mai 2026)</h4>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Mars 2025</div>
+                    <div class="timeline-content">
+                        <strong>Lancement "Qui est où ?"</strong> - Développement initial de l'application de gestion opérationnelle. 
+                        Mise en production et formation des 4 utilisateurs.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Mars - Sept 2025</div>
+                    <div class="timeline-content">
+                        <strong>Évolutions continues</strong> - Ajout progressif de modules : vitrerie, indicateurs comptables, 
+                        synchronisation cloud. Passage d'une architecture monolithique à modulaire.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Automne 2025</div>
+                    <div class="timeline-content">
+                        <strong>Lancement "Suivi Contentieux v2.1"</strong> - Développement application juridique avec architecture 
+                        séparée (nouveau repository). Mise en production avec accès restreint.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Mars 2026</div>
+                    <div class="timeline-content">
+                        <strong>Développement "Starsnett Devis"</strong> - Création application commerciale (925 lignes de code) 
+                        avec signature électronique et intégrations APIs (EmailJS, JSONBin).
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">25 Avril 2026</div>
+                    <div class="timeline-content">
+                        <strong>Formation équipe prévue</strong> - Session formation M. Nimaga et Oumar sur les 3 applications.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Mai 2026</div>
+                    <div class="timeline-content">
+                        <strong>Déploiement tablettes terrain</strong> - Équipement commerciaux avec tablettes pour utilisation 
+                        app Devis en mobilité.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Architecture et méthodologie</h3>
+            <p>
+                Le développement des trois applications a suivi une évolution architecturale significative, 
+                passant d'une approche monolithique initiale à une architecture modulaire avec repositories 
+                séparés pour chaque application, garantissant maintenabilité et évolutivité.
+            </p>
+            <p>
+                <strong>Architecture actuelle :</strong> 3 repositories GitHub Pages indépendants, permettant 
+                déploiement et maintenance séparés. Chaque application utilise HTML/CSS/JavaScript vanilla 
+                pour garantir performance et compatibilité maximale sans dépendances externes lourdes.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>Ketty BUREL</strong> - Office Manager - Starsnett Services</p>
+            <p>Email : <a href="mailto:kettyburel@gmail.com">kettyburel@gmail.com</a></p>
+            <p style="margin-top: 1rem;"><a href="portfolio_vae_ketty_burel.html">← Retour à l'accueil</a></p>
+        </div>
+    </footer>
+</body>
+</html>

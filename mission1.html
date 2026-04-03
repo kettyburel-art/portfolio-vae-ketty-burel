@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 1 - Coordination Administrative | Portfolio VAE Ketty BUREL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bleu-starsnett: #1B4F8A;
+            --jaune-starsnett: #F5C400;
+            --gris-clair: #F5F5F5;
+            --gris-moyen: #E0E0E0;
+            --texte-fonce: #2C3E50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--texte-fonce);
+            background: var(--gris-clair);
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--jaune-starsnett);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* HEADER MISSION */
+        .mission-header {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .mission-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* SECTION */
+        .section {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .section h3 {
+            font-size: 2rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 1.5rem;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* GRID 2 COLONNES */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* CARD */
+        .card {
+            background: var(--gris-clair);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--jaune-starsnett);
+        }
+
+        .card h4 {
+            color: var(--bleu-starsnett);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card ul {
+            list-style: none;
+        }
+
+        .card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--jaune-starsnett);
+            font-weight: bold;
+        }
+
+        /* IMPACT STATS */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--jaune-starsnett);
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-label {
+            font-size: 1rem;
+        }
+
+        /* CTA BUTTON */
+        .cta-box {
+            background: var(--gris-clair);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--jaune-starsnett);
+            color: var(--bleu-starsnett);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--jaune-starsnett);
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .two-cols {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container">
+            <h1>Portfolio VAE - Ketty BUREL</h1>
+            <ul>
+                <li><a href="portfolio_vae_ketty_burel.html">Accueil</a></li>
+                <li><a href="mission1.html">Mission 1</a></li>
+                <li><a href="mission2.html">Mission 2</a></li>
+                <li><a href="mission3.html">Mission 3</a></li>
+                <li><a href="mission4.html">Mission 4</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HEADER MISSION -->
+    <div class="mission-header">
+        <div class="container">
+            <h2>MISSION 1 : Coordination Administrative</h2>
+            <p>Pilotage opérationnel quotidien de l'activité terrain</p>
+        </div>
+    </div>
+
+    <!-- CONTEXTE -->
+    <section class="section">
+        <div class="container">
+            <h3>Contexte et périmètre</h3>
+            <p>
+                Chez Starsnett Services, entreprise de nettoyage professionnel intervenant sur 167 sites clients 
+                en Île-de-France avec 28 agents terrain, j'assure la coordination administrative complète de 
+                l'activité opérationnelle. Cette mission centrale implique la gestion quotidienne des plannings, 
+                l'interface avec le système de paie, la coordination des équipes terrain et la réponse aux 
+                sollicitations internes et externes.
+            </p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-number">167</div>
+                    <div class="impact-label">Sites clients gérés</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">28</div>
+                    <div class="impact-label">Agents coordonnés</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">4</div>
+                    <div class="impact-label">Utilisateurs actifs</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">-95%</div>
+                    <div class="impact-label">Temps de réponse</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESPONSABILITÉS -->
+    <section class="section">
+        <div class="container">
+            <h3>Responsabilités principales</h3>
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Gestion opérationnelle quotidienne</h4>
+                    <ul>
+                        <li>Planification hebdomadaire des interventions sur 167 sites</li>
+                        <li>Affectation des agents selon compétences et disponibilités</li>
+                        <li>Suivi des présences et gestion des absences</li>
+                        <li>Coordination avec les responsables terrain (Oumar, M. Nimaga)</li>
+                        <li>Gestion des urgences et remplacements de dernière minute</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Interface système de paie</h4>
+                    <ul>
+                        <li>Saisie quotidienne des heures travaillées dans Pégase</li>
+                        <li>Validation des éléments variables de paie</li>
+                        <li>Transmission des données au comptable (Florent)</li>
+                        <li>Gestion des anomalies et régularisations</li>
+                        <li>Coordination avec les agents pour déclarations</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Communication et reporting</h4>
+                    <ul>
+                        <li>Point quotidien avec la direction sur l'activité terrain</li>
+                        <li>Réponse aux sollicitations clients (modifications planning)</li>
+                        <li>Communication avec les agents (consignes, changements)</li>
+                        <li>Synthèse hebdomadaire de l'activité opérationnelle</li>
+                        <li>Remontée des problématiques terrain</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Digitalisation et optimisation</h4>
+                    <ul>
+                        <li>Développement de l'application "Qui est où ?"</li>
+                        <li>Centralisation des données sites et agents</li>
+                        <li>Automatisation des tâches répétitives</li>
+                        <li>Formation des utilisateurs aux outils</li>
+                        <li>Amélioration continue des processus</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUTIL DÉVELOPPÉ -->
+    <section class="section">
+        <div class="container">
+            <h3>Application développée : "Qui est où ?"</h3>
+            <p>
+                Face à la complexité croissante de la gestion de 167 sites et 28 agents, j'ai conçu et développé 
+                une application web complète permettant de centraliser toutes les informations opérationnelles. 
+                Cette Progressive Web App (PWA) est utilisée quotidiennement par 4 utilisateurs (direction, 
+                comptable, responsables terrain) et constitue l'outil central de pilotage de l'activité.
+            </p>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Modules fonctionnels (6)</h4>
+                    <ul>
+                        <li>Planning quotidien : affectations du jour</li>
+                        <li>Gestion sites : 167 fiches détaillées</li>
+                        <li>Gestion agents : 28 profils complets</li>
+                        <li>Module vitrerie : 35 sites spécialisés</li>
+                        <li>Indicateurs comptables : CA, marges</li>
+                        <li>Authentification sécurisée par code PIN</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Caractéristiques techniques</h4>
+                    <ul>
+                        <li>Technologies : HTML5, CSS3, JavaScript vanilla</li>
+                        <li>Stockage local + cloud JSONBin (sync optionnelle)</li>
+                        <li>Interface responsive (mobile + desktop)</li>
+                        <li>Données temps réel accessibles partout</li>
+                        <li>Architecture modulaire évolutive</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;">
+                    <strong>Application en production depuis mars 2025</strong>
+                </p>
+                <a href="https://starsnettinfo-lab.github.io/Starsnett/" target="_blank" class="cta-button">
+                    🔗 Accéder à l'application "Qui est où ?"
+                </a>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.95rem;">
+                    (Lien cliquable - Application hébergée sur GitHub Pages)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACT MESURABLE -->
+    <section class="section">
+        <div class="container">
+            <h3>Impact mesurable sur l'organisation</h3>
+            <p>
+                La digitalisation de la coordination administrative a permis une transformation profonde 
+                de l'efficacité opérationnelle. Les gains mesurés démontrent la valeur ajoutée de cette mission.
+            </p>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Gains d'efficacité</h4>
+                    <ul>
+                        <li><strong>-95% de temps de réponse</strong> aux sollicitations (consultation planning instantanée vs recherche manuelle 15-20 min)</li>
+                        <li><strong>-80% de sollicitations répétitives</strong> grâce à l'autonomie des utilisateurs</li>
+                        <li><strong>100% des données centralisées</strong> dans un outil unique accessible partout</li>
+                        <li><strong>Zéro erreur de planification</strong> depuis mise en production</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Amélioration continue</h4>
+                    <ul>
+                        <li>Évolution de l'application selon besoins terrain</li>
+                        <li>Formation continue des nouveaux utilisateurs</li>
+                        <li>Optimisation régulière des processus</li>
+                        <li>Développement de nouveaux modules (vitrerie, comptabilité)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPÉTENCES -->
+    <section class="section">
+        <div class="container">
+            <h3>Compétences mobilisées</h3>
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Compétences organisationnelles</h4>
+                    <ul>
+                        <li>Gestion multi-sites et multi-agents</li>
+                        <li>Priorisation et gestion des urgences</li>
+                        <li>Coordination d'équipes dispersées</li>
+                        <li>Interface avec systèmes informatiques (Pégase)</li>
+                        <li>Rigueur administrative et traçabilité</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Compétences techniques et relationnelles</h4>
+                    <ul>
+                        <li>Développement web (HTML/CSS/JavaScript)</li>
+                        <li>Gestion de projet digital</li>
+                        <li>Communication écrite et orale</li>
+                        <li>Pédagogie et formation utilisateurs</li>
+                        <li>Amélioration continue et innovation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p><strong>Ketty BUREL</strong> - Office Manager - Starsnett Services</p>
+            <p>Email : <a href="mailto:kettyburel@gmail.com">kettyburel@gmail.com</a></p>
+            <p style="margin-top: 1rem;"><a href="portfolio_vae_ketty_burel.html">← Retour à l'accueil</a></p>
+        </div>
+    </footer>
+</body>
+</html>

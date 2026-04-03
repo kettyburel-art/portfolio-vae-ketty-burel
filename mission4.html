@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 4 - Commercial & Qualité | Portfolio VAE Ketty BUREL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bleu-starsnett: #1B4F8A;
+            --jaune-starsnett: #F5C400;
+            --gris-clair: #F5F5F5;
+            --gris-moyen: #E0E0E0;
+            --texte-fonce: #2C3E50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--texte-fonce);
+            background: var(--gris-clair);
+        }
+
+        nav {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--jaune-starsnett);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .mission-header {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .mission-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .section h3 {
+            font-size: 2rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 1.5rem;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .stats-big {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-big {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-big-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--jaune-starsnett);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-big-label {
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: var(--gris-clair);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--jaune-starsnett);
+        }
+
+        .card h4 {
+            color: var(--bleu-starsnett);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card ul {
+            list-style: none;
+        }
+
+        .card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--jaune-starsnett);
+            font-weight: bold;
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .highlight-box {
+            background: #FFF9E6;
+            border-left: 4px solid var(--jaune-starsnett);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box strong {
+            color: var(--bleu-starsnett);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--jaune-starsnett);
+            color: var(--bleu-starsnett);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-box {
+            background: var(--gris-clair);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .mission-box {
+            background: white;
+            border: 2px solid var(--bleu-starsnett);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .mission-box h4 {
+            color: var(--bleu-starsnett);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--jaune-starsnett);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .mission-header h2 {
+                font-size: 2rem;
+            }
+
+            .two-cols {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-big {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>Portfolio VAE - Ketty BUREL</h1>
+            <ul>
+                <li><a href="portfolio_vae_ketty_burel.html">Accueil</a></li>
+                <li><a href="mission1.html">Mission 1</a></li>
+                <li><a href="mission2.html">Mission 2</a></li>
+                <li><a href="mission3.html">Mission 3</a></li>
+                <li><a href="mission4.html">Mission 4</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="mission-header">
+        <div class="container">
+            <h2>MISSION 4 : Commercial & Qualité</h2>
+            <p>Développement commercial structuré et contrôle qualité terrain</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <h3>Une mission à double dimension</h3>
+            <p>
+                Cette mission illustre parfaitement ma polyvalence professionnelle en combinant deux expertises 
+                complémentaires : le développement commercial (prospection, outils de vente, estimation CA) et 
+                le contrôle qualité terrain (visites sites clients, diagnostic problématiques, propositions 
+                d'amélioration). Ces deux volets contribuent directement à la croissance et à la pérennité de 
+                l'activité Starsnett Services.
+            </p>
+
+            <div class="stats-big">
+                <div class="stat-big">
+                    <div class="stat-big-number">120+</div>
+                    <div class="stat-big-label">Prospects qualifiés identifiés</div>
+                </div>
+                <div class="stat-big">
+                    <div class="stat-big-number">500-600K€</div>
+                    <div class="stat-big-label">CA potentiel annuel estimé</div>
+                </div>
+                <div class="stat-big">
+                    <div class="stat-big-number">2</div>
+                    <div class="stat-big-label">Argumentaires commerciaux créés</div>
+                </div>
+                <div class="stat-big">
+                    <div class="stat-big-number">48K€</div>
+                    <div class="stat-big-label">Contrat Cercle Athlétique (annuel)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>VOLET 1 : Développement Commercial</h3>
+
+            <div class="mission-box">
+                <h4>Prospection structurée multi-territoires</h4>
+                <p>
+                    J'ai mené une démarche complète de prospection commerciale sur deux territoires stratégiques 
+                    (Val-de-Marne 94 et Paris), avec identification de 120+ prospects qualifiés, segmentation par 
+                    typologie (médical/bureaux), création d'argumentaires sectoriels professionnels et estimation 
+                    du potentiel de chiffre d'affaires. Cette mission de Business Development démontre ma capacité 
+                    à structurer une approche commerciale complète.
+                </p>
+            </div>
+
+            <h4 style="color: var(--bleu-starsnett); margin: 2rem 0 1rem 0;">Prospection Val-de-Marne (94) — Avril 2026</h4>
+            
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Prospects médicaux (33)</h4>
+                    <ul>
+                        <li>Cabinets médecins généralistes</li>
+                        <li>Cabinets dentaires</li>
+                        <li>Kinésithérapeutes / Ostéopathes</li>
+                        <li>Centres médicaux pluridisciplinaires</li>
+                        <li>Maisons de santé</li>
+                        <li>Forfait moyen : 200-2 000€/mois</li>
+                        <li><strong>Potentiel CA : 120-320K€/an</strong></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Prospects bureaux (8)</h4>
+                    <ul>
+                        <li>Centres d'affaires (CBC Créteil)</li>
+                        <li>Espaces coworking</li>
+                        <li>Cabinets experts-comptables</li>
+                        <li>Études notariales</li>
+                        <li>Cabinets d'avocats</li>
+                        <li>Forfait moyen : 300-800€/mois</li>
+                        <li><strong>Potentiel CA : 48K€/an</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4 style="color: var(--bleu-starsnett); margin: 2rem 0 1rem 0;">Prospection Paris (75) — Avril 2026</h4>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Prospects médicaux (50+)</h4>
+                    <ul>
+                        <li>Ciblage arrondissements 11e, 12e, 13e, 19e, 20e</li>
+                        <li>Cabinets pluridisciplinaires prioritaires</li>
+                        <li>Utilisation Doctolib pour identification</li>
+                        <li>Forfait moyen : 400€/mois</li>
+                        <li><strong>Potentiel CA : ~240K€/an</strong></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Prospects bureaux (20+)</h4>
+                    <ul>
+                        <li>Coworkings (WeWork, Spaces, Morning...)</li>
+                        <li>Centres d'affaires proximité Paris 12e</li>
+                        <li>Professions libérales</li>
+                        <li>Forfait moyen : 600€/mois</li>
+                        <li><strong>Potentiel CA : ~144K€/an</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Total prospection 94 + Paris :</strong> 120+ prospects qualifiés • Potentiel CA global : 
+                500-600K€/an (avec taux conversion 50%) • Doublement potentiel du CA entreprise via prospection structurée
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Outils commerciaux créés</h3>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Argumentaire secteur médical (7 pages)</h4>
+                    <ul>
+                        <li>Présentation entreprise (345+ sites IDF)</li>
+                        <li>Référence client : Pôle Médical Panorama</li>
+                        <li>Prestations adaptées au médical</li>
+                        <li>Protocoles hygiène EN 14476 (virucides)</li>
+                        <li>Grilles tarifaires médicales détaillées</li>
+                        <li>Traitement objections secteur médical</li>
+                        <li>Engagement qualité + avantage digital</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Argumentaire bureaux professionnels (7 pages)</h4>
+                    <ul>
+                        <li>Présentation entreprise (délai 24h, agents déclarés)</li>
+                        <li>Catalogue prestations détaillé</li>
+                        <li>Grilles tarifaires par type de local</li>
+                        <li>Différenciation concurrence (outils digitaux)</li>
+                        <li>Traitement 6 objections courantes</li>
+                        <li>Offre démarrage (essai gratuit, remises)</li>
+                        <li>Segments ciblés (coworkings, professions libérales)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Base de données prospects (fichier Excel structuré)</h4>
+                <ul>
+                    <li>3 feuilles : Récapitulatif + Prospects médicaux + Prospects bureaux</li>
+                    <li>Colonnes : Nom/Structure, Type, Adresse, Ville, Téléphone, Horaires, Note Google, Statut, Commentaires</li>
+                    <li>Priorisation géographique (Créteil, Maisons-Alfort, Alfortville, Paris 11e-12e-13e)</li>
+                    <li>Estimation forfait moyen par segment</li>
+                    <li>Calcul CA potentiel avec taux de conversion projetés</li>
+                    <li>Méthodologie : recherche Google Maps exhaustive + qualification complète</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Application développée : "Starsnett Devis"</h3>
+            <p>
+                Pour accompagner la prospection commerciale, j'ai développé une application de génération 
+                automatisée de devis avec signature électronique (925 lignes de code). Cet outil permet aux 
+                commerciaux de créer des devis professionnels en quelques minutes, avec envoi par email/WhatsApp 
+                et suivi des signatures.
+            </p>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Fonctionnalités clés</h4>
+                    <ul>
+                        <li>Catalogue 90+ prestations de nettoyage</li>
+                        <li>Signature électronique intégrée (EmailJS)</li>
+                        <li>Génération PDF automatique</li>
+                        <li>Envoi email/WhatsApp instantané</li>
+                        <li>Numérotation automatique par commercial</li>
+                        <li>Onglets Particuliers/Professionnels</li>
+                        <li>Affichage RIB BNP pour paiements</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Déploiement prévu</h4>
+                    <ul>
+                        <li>Développement : mars 2026 (925 lignes)</li>
+                        <li>Formation équipe : 25 avril 2026</li>
+                        <li>Déploiement tablettes : mai 2026</li>
+                        <li>2 utilisateurs commerciaux (Nimaga, Oumar)</li>
+                        <li>Impact estimé : -85% temps création devis</li>
+                        <li>Gain commercial : réactivité 24h garantie</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;">
+                    <strong>Application développée mars 2026 - Déploiement mai 2026</strong>
+                </p>
+                <a href="https://starsnettinfo-lab.github.io/starsnett-devis/" target="_blank" class="cta-button">
+                    🔗 Accéder à l'application Devis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>VOLET 2 : Contrôle Qualité Terrain</h3>
+
+            <div class="mission-box">
+                <h4>Visites qualité sur sites clients</h4>
+                <p>
+                    En complément du développement commercial, j'assure des visites de contrôle qualité sur les 
+                    sites clients pour garantir la satisfaction et identifier les axes d'amélioration. Cette 
+                    démarche qualité terrain illustre un cycle client complet : contractualisation, mise en place, 
+                    contrôle qualité.
+                </p>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Exemple concret — Cercle Athlétique de Montrouge (2 avril 2026) :</strong><br><br>
+                Visite qualité du site suite à contractualisation (contrat 48K€/an). Diagnostic terrain : 
+                courts de tennis terre battue générant poussière accrue sur toutes surfaces. Identification 
+                7 zones sensibles (portes/façades casiers, rebords fenêtres, dessus radiateurs, cloisons vitrées, 
+                surfaces horizontales). Remontée direction avec email professionnel détaillant problématique et 
+                recommandations. Proposition intégration fiche consignes site pour agents.
+                <br><br>
+                <strong>→ Cycle complet :</strong> Contractualisation (mars) → Mise en place (mars) → 
+                Contrôle qualité terrain (avril)
+            </div>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Démarche qualité terrain</h4>
+                    <ul>
+                        <li>Visite sites clients (nouveaux contrats prioritaires)</li>
+                        <li>Diagnostic problématiques spécifiques</li>
+                        <li>Identification zones sensibles</li>
+                        <li>Évaluation adéquation prestation/besoin</li>
+                        <li>Échanges avec responsables sites</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Remontée et amélioration</h4>
+                    <ul>
+                        <li>Reporting direction avec recommandations</li>
+                        <li>Proposition ajustements prestations</li>
+                        <li>Intégration consignes fiches sites</li>
+                        <li>Formation agents sur spécificités</li>
+                        <li>Suivi satisfaction client</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h3>Compétences mobilisées</h3>
+
+            <div class="two-cols">
+                <div class="card">
+                    <h4>Compétences commerciales</h4>
+                    <ul>
+                        <li>Segmentation marché et ciblage prospects</li>
+                        <li>Prospection qualifiée data-driven</li>
+                        <li>Création outils d'aide à la vente</li>
+                        <li>Rédaction argumentaires sectoriels</li>
+                        <li>Estimation CA et business intelligence</li>
+                        <li>Priorisation géographique et stratégique</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Compétences qualité et relationnelles</h4>
+                    <ul>
+                        <li>Diagnostic terrain et analyse problématiques</li>
+                        <li>Sens du détail et exigence qualité</li>
+                        <li>Communication écrite professionnelle</li>
+                        <li>Force de proposition et amélioration continue</li>
+                        <li>Relation client et satisfaction</li>
+                        <li>Vision cycle client complet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>Ketty BUREL</strong> - Office Manager - Starsnett Services</p>
+            <p>Email : <a href="mailto:kettyburel@gmail.com">kettyburel@gmail.com</a></p>
+            <p style="margin-top: 1rem;"><a href="portfolio_vae_ketty_burel.html">← Retour à l'accueil</a></p>
+        </div>
+    </footer>
+</body>
+</html>
