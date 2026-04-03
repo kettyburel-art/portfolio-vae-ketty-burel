@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio VAE - Ketty BUREL | Office Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bleu-starsnett: #1B4F8A;
+            --jaune-starsnett: #F5C400;
+            --gris-clair: #F5F5F5;
+            --gris-moyen: #E0E0E0;
+            --texte-fonce: #2C3E50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--texte-fonce);
+            background: var(--gris-clair);
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--jaune-starsnett);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* SECTION HERO */
+        .hero {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--gris-moyen);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--bleu-starsnett);
+            border: 4px solid var(--jaune-starsnett);
+        }
+
+        .hero-text h2 {
+            font-size: 2.5rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* CHIFFRES CLÉS */
+        .stats {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .stats h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--bleu-starsnett), #2563a8);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--jaune-starsnett);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* MISSIONS */
+        .missions {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .missions h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 2rem;
+        }
+
+        .missions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .mission-card {
+            background: var(--gris-clair);
+            border-left: 5px solid var(--jaune-starsnett);
+            padding: 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .mission-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .mission-number {
+            display: inline-block;
+            background: var(--bleu-starsnett);
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .mission-card h3 {
+            color: var(--bleu-starsnett);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-card p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .mission-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .highlight-item::before {
+            content: "✓";
+            color: var(--jaune-starsnett);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* TIMELINE VAE */
+        .timeline {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .timeline h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--bleu-starsnett);
+            margin-bottom: 2rem;
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--jaune-starsnett);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-date {
+            text-align: right;
+            padding-right: 2rem;
+        }
+
+        .timeline-date-left {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--bleu-starsnett);
+            border: 4px solid var(--jaune-starsnett);
+            border-radius: 50%;
+            position: relative;
+            left: 50%;
+            top: 10px;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: var(--gris-clair);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .timeline-content h4 {
+            color: var(--bleu-starsnett);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bleu-starsnett);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: var(--jaune-starsnett);
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-photo {
+                margin: 0 auto;
+            }
+
+            .hero-text h2 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .missions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-line {
+                left: 30px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                padding-left: 60px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .timeline-date {
+                text-align: left;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container">
+            <h1>Portfolio VAE - Ketty BUREL</h1>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#missions">Missions</a></li>
+                <li><a href="#timeline">Parcours VAE</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="accueil" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-photo">
+                    KB
+                </div>
+                <div class="hero-text">
+                    <h2>Ketty BUREL</h2>
+                    <p class="subtitle">Office Manager – Starsnett Services</p>
+                    <p>
+                        Professionnelle polyvalente avec 13 ans d'expérience, je pilote la coordination administrative, 
+                        la transformation digitale, la gestion juridique et le développement commercial chez Starsnett Services. 
+                        Candidate à la VAE pour le diplôme Office Manager (Bac+3 - RNCP 41686), je présente dans ce portfolio 
+                        mes réalisations concrètes et mes compétences acquises par l'expérience.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHIFFRES CLÉS -->
+    <section class="stats">
+        <div class="container">
+            <h2>Chiffres Clés</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">13</div>
+                    <div class="stat-label">Années d'expérience professionnelle</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Applications web développées</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">248K€</div>
+                    <div class="stat-label">Créances juridiques gérées</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">167</div>
+                    <div class="stat-label">Sites clients coordonnés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">-95%</div>
+                    <div class="stat-label">Réduction temps de réponse opérationnel</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">+100%</div>
+                    <div class="stat-label">Amélioration fiabilité suivi juridique</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSIONS -->
+    <section id="missions" class="missions">
+        <div class="container">
+            <h2>Mes 4 Missions Principales</h2>
+            <div class="missions-grid">
+                <!-- MISSION 1 -->
+                <div class="mission-card" onclick="scrollToMission('mission1')">
+                    <div class="mission-number">1</div>
+                    <h3>Coordination Administrative</h3>
+                    <p>Pilotage opérationnel quotidien de 167 sites et 28 agents</p>
+                    <div class="mission-highlights">
+                        <div class="highlight-item">Interface système paie Pégase</div>
+                        <div class="highlight-item">Application temps réel "Qui est où ?"</div>
+                        <div class="highlight-item">-95% temps de réponse</div>
+                    </div>
+                </div>
+
+                <!-- MISSION 2 -->
+                <div class="mission-card" onclick="scrollToMission('mission2')">
+                    <div class="mission-number">2</div>
+                    <h3>Transformation Digitale</h3>
+                    <p>Conception et développement de 3 applications métier</p>
+                    <div class="mission-highlights">
+                        <div class="highlight-item">HTML/CSS/JavaScript</div>
+                        <div class="highlight-item">Architecture modulaire</div>
+                        <div class="highlight-item">6 modules opérationnels</div>
+                    </div>
+                </div>
+
+                <!-- MISSION 3 -->
+                <div class="mission-card" onclick="scrollToMission('mission3')">
+                    <div class="mission-number">3</div>
+                    <h3>Gestion Juridique</h3>
+                    <p>Suivi de 248K€ de créances et 21 dossiers contentieux</p>
+                    <div class="mission-highlights">
+                        <div class="highlight-item">Coordination 2 cabinets d'avocats</div>
+                        <div class="highlight-item">7 audiences Tribunal Commerce</div>
+                        <div class="highlight-item">+100% fiabilité traçabilité</div>
+                    </div>
+                </div>
+
+                <!-- MISSION 4 -->
+                <div class="mission-card" onclick="scrollToMission('mission4')">
+                    <div class="mission-number">4</div>
+                    <h3>Commercial & Qualité</h3>
+                    <p>Développement commercial et contrôle qualité terrain</p>
+                    <div class="mission-highlights">
+                        <div class="highlight-item">120+ prospects qualifiés</div>
+                        <div class="highlight-item">500-600K€ CA potentiel</div>
+                        <div class="highlight-item">Visites qualité clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE VAE -->
+    <section id="timeline" class="timeline">
+        <div class="container">
+            <h2>Mon Parcours VAE</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <!-- Avril 2026 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <strong>Avril 2026</strong>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Recevabilité & Préparation</h4>
+                        <p>Dépôt questionnaire recevabilité CNFDI. Début constitution dossier et création portfolio interactif.</p>
+                    </div>
+                </div>
+
+                <!-- Avril-Octobre 2026 -->
+                <div class="timeline-item">
+                    <div></div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content timeline-date-left">
+                        <h4>Constitution Livrets 1 & 2</h4>
+                        <p>Accompagnement ASCENCIA. Rédaction expérience professionnelle, documentation missions et compétences.</p>
+                    </div>
+                </div>
+
+                <!-- Octobre 2026 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <strong>Octobre 2026</strong>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Dépôt Livret 2</h4>
+                        <p>Transmission dossier complet au certificateur. Paiement frais jury (850€).</p>
+                    </div>
+                </div>
+
+                <!-- Mars 2027 -->
+                <div class="timeline-item">
+                    <div></div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content timeline-date-left">
+                        <h4>Soutenance Orale</h4>
+                        <p>Présentation parcours et compétences devant jury. Valorisation portfolio interactif avec applications en production.</p>
+                    </div>
+                </div>
+
+                <!-- Avril 2027 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <strong>Avril 2027</strong>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Obtention Diplôme</h4>
+                        <p>Office Manager (Bac+3 - RNCP 41686, Niveau 6). Négociation salariale ou recherche nouveau poste.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer id="contact">
+        <div class="container">
+            <p><strong>Ketty BUREL</strong></p>
+            <p>Office Manager - Starsnett Services</p>
+            <p>83 Rue de Reuilly, 75012 Paris</p>
+            <p>Email : <a href="mailto:kettyburel@gmail.com">kettyburel@gmail.com</a></p>
+            <p style="margin-top: 2rem; opacity: 0.8;">Portfolio VAE - Candidature Office Manager Bac+3 (RNCP 41686)</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToMission(missionId) {
+            // Cette fonction sera utilisée quand les pages missions seront créées
+            // Pour l'instant, affiche une alerte
+            const messages = {
+                'mission1': 'Mission 1 : Coordination Administrative\n\nVoir la page dédiée pour plus de détails',
+                'mission2': 'Mission 2 : Transformation Digitale\n\nVoir la page dédiée pour plus de détails',
+                'mission3': 'Mission 3 : Gestion Juridique\n\nVoir la page dédiée pour plus de détails',
+                'mission4': 'Mission 4 : Commercial & Qualité\n\nVoir la page dédiée pour plus de détails'
+            };
+            alert(messages[missionId]);
+        }
+
+        // Smooth scroll pour navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
