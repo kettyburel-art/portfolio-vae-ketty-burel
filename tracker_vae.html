@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker VAE | Ketty Burel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --vert: #6b9e87;
+            --creme: #faf8f3;
+            --coral: #e8a995;
+            --or: #d4af37;
+            --texte: #2a2a2a;
+            --gris: #6a6a6a;
+            --rouge: #e55353;
+            --bleu: #4a90d9;
+        }
+
+        body {
+            font-family: 'Cambria', Georgia, serif;
+            background: linear-gradient(135deg, var(--creme) 0%, #f0ebe3 100%);
+            color: var(--texte);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2em;
+            color: var(--vert);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--gris);
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--coral);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        /* Barre de progression globale */
+        .progression-globale {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .progression-globale h2 {
+            color: var(--vert);
+            margin-bottom: 15px;
+        }
+
+        .barre-container {
+            background: #eee;
+            border-radius: 20px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .barre-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--vert), var(--or));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .pct-label {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--vert);
+            margin-top: 10px;
+        }
+
+        /* Infos clés */
+        .infos-cles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--coral);
+        }
+
+        .info-card .valeur {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--vert);
+        }
+
+        .info-card .libelle {
+            font-size: 0.85em;
+            color: var(--gris);
+            margin-top: 5px;
+        }
+
+        .info-card.urgent {
+            border-left-color: var(--rouge);
+        }
+
+        .info-card.urgent .valeur {
+            color: var(--rouge);
+        }
+
+        /* Blocs de compétences */
+        .section-titre {
+            font-size: 1.4em;
+            color: var(--vert);
+            margin: 25px 0 15px;
+            border-bottom: 2px solid var(--coral);
+            padding-bottom: 8px;
+        }
+
+        .bloc {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--vert);
+        }
+
+        .bloc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .bloc-titre {
+            font-weight: bold;
+            color: var(--vert);
+            font-size: 1.05em;
+            flex: 1;
+        }
+
+        .statut {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+        .statut.fait { background: #d4edda; color: #155724; }
+        .statut.en-cours { background: #fff3cd; color: #856404; }
+        .statut.a-faire { background: #f8d7da; color: #721c24; }
+        .statut.a-valider { background: #cce5ff; color: #004085; }
+
+        .bloc-avancement {
+            margin: 10px 0;
+        }
+
+        .mini-barre {
+            background: #eee;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .mini-barre-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .mini-barre-fill.vert { background: var(--vert); }
+        .mini-barre-fill.orange { background: var(--or); }
+        .mini-barre-fill.rouge { background: var(--coral); }
+        .mini-barre-fill.bleu { background: var(--bleu); }
+
+        .checklist {
+            margin-top: 12px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95em;
+            color: var(--gris);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--vert);
+            cursor: pointer;
+        }
+
+        .checklist-item.done {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        /* Timeline entretiens */
+        .timeline {
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--coral);
+        }
+
+        .entretien {
+            padding-left: 45px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .entretien::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--vert);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--coral);
+        }
+
+        .entretien.fait::before {
+            background: var(--or);
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .entretien.prochain::before {
+            background: var(--bleu);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 2px var(--bleu); }
+            50% { box-shadow: 0 0 0 6px rgba(74, 144, 217, 0.3); }
+        }
+
+        .entretien-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .entretien-date {
+            font-weight: bold;
+            color: var(--vert);
+            margin-bottom: 5px;
+        }
+
+        .entretien-detail {
+            font-size: 0.9em;
+            color: var(--gris);
+        }
+
+        /* Notes */
+        .notes-zone {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .notes-zone textarea {
+            width: 100%;
+            min-height: 120px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Cambria', serif;
+            font-size: 0.95em;
+            color: var(--texte);
+            resize: vertical;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background: var(--vert);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cambria', serif;
+            font-size: 0.95em;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--coral);
+            transform: translateY(-2px);
+        }
+
+        /* A faire urgent */
+        .urgences {
+            background: #fff5f5;
+            border: 2px solid var(--rouge);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .urgences h2 {
+            color: var(--rouge);
+            margin-bottom: 15px;
+        }
+
+        .urgence-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #fdd;
+            font-size: 0.95em;
+        }
+
+        .urgence-item:last-child { border-bottom: none; }
+
+        .urgence-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--rouge);
+            cursor: pointer;
+        }
+
+        /* Countdown jury */
+        .countdown {
+            background: linear-gradient(135deg, var(--vert), #4a8a72);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .countdown h2 {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .countdown .jours {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .countdown .sous-titre {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--gris);
+            padding: 20px;
+            font-size: 0.85em;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5em; }
+            .infos-cles { grid-template-columns: 1fr 1fr; }
+            .bloc-header { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎓 Tracker VAE</h1>
+        <p>Ketty Burel — RNCP 41686 Bac+3 Office Manager</p>
+        <span class="badge">Ascencia Business School</span>
+    </header>
+
+    <!-- Countdown jury -->
+    <div class="countdown">
+        <h2>🗓️ Jury de soutenance</h2>
+        <div class="jours" id="jours-restants">--</div>
+        <div class="sous-titre">jours restants | Décembre 2026</div>
+    </div>
+
+    <!-- Progression globale -->
+    <div class="progression-globale">
+        <h2>📊 Avancement global</h2>
+        <div class="barre-container">
+            <div class="barre-fill" id="barre-globale" style="width: 0%">0%</div>
+        </div>
+        <div class="pct-label" id="pct-globale">0%</div>
+        <p style="color: var(--gris); font-size: 0.9em; margin-top: 8px;">Basé sur les tâches complétées</p>
+    </div>
+
+    <!-- Infos clés -->
+    <div class="infos-cles">
+        <div class="info-card">
+            <div class="valeur">1/6</div>
+            <div class="libelle">Entretiens accompagnement</div>
+        </div>
+        <div class="info-card">
+            <div class="valeur">4</div>
+            <div class="libelle">Blocs de compétences</div>
+        </div>
+        <div class="info-card urgent">
+            <div class="valeur">Déc 2026</div>
+            <div class="libelle">Date jury cible</div>
+        </div>
+        <div class="info-card">
+            <div class="valeur">Corine Flesia</div>
+            <div class="libelle">Accompagnatrice</div>
+        </div>
+    </div>
+
+    <!-- Urgences -->
+    <div class="urgences">
+        <h2>⚠️ À faire maintenant</h2>
+        <div class="urgence-item">
+            <input type="checkbox" onchange="majProgression()">
+            <span>Renvoyer le contrat CDI signé à Ascencia</span>
+        </div>
+        <div class="urgence-item">
+            <input type="checkbox" onchange="majProgression()">
+            <span>Renvoyer la feuille d'émargement signée</span>
+        </div>
+        <div class="urgence-item">
+            <input type="checkbox" onchange="majProgression()">
+            <span>Renvoyer le suivi d'accompagnement signé</span>
+        </div>
+        <div class="urgence-item">
+            <input type="checkbox" onchange="majProgression()">
+            <span>Renvoyer l'attestation France VAE</span>
+        </div>
+        <div class="urgence-item">
+            <input type="checkbox" onchange="majProgression()">
+            <span>Valider les blocs de compétences remplis par Mme Flesia</span>
+        </div>
+        <div class="urgence-item">
+            <input type="checkbox" onchange="majProgression()">
+            <span>Envoyer le livret 2 la veille du prochain RDV</span>
+        </div>
+    </div>
+
+    <!-- Blocs de compétences -->
+    <div class="section-titre">📋 Blocs de compétences — Livret 2</div>
+
+    <!-- Bloc 1 -->
+    <div class="bloc">
+        <div class="bloc-header">
+            <div class="bloc-titre">Bloc 1 — Pilotage de l'activité et coordination opérationnelle</div>
+            <span class="statut en-cours">En cours</span>
+        </div>
+        <div class="bloc-avancement">
+            <div style="display:flex; justify-content:space-between; font-size:0.85em; color:var(--gris);">
+                <span>Avancement</span><span id="pct-bloc1">0%</span>
+            </div>
+            <div class="mini-barre">
+                <div class="mini-barre-fill vert" id="barre-bloc1" style="width:0%"></div>
+            </div>
+        </div>
+        <div class="checklist">
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(1)"><span>Commentaire rédigé (Qui est où, 167 sites, 28 agents)</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(1)"><span>Applications web documentées (Qui est où, Contentieux, Devis)</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(1)"><span>Preuves : captures d'écran des apps</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(1)"><span>Preuves : KPIs et tableaux de bord</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(1)"><span>Relu et validé par Corine Flesia</span></div>
+        </div>
+    </div>
+
+    <!-- Bloc 2 -->
+    <div class="bloc">
+        <div class="bloc-header">
+            <div class="bloc-titre">Bloc 2 — Gestion administrative, juridique et financière</div>
+            <span class="statut en-cours">En cours</span>
+        </div>
+        <div class="bloc-avancement">
+            <div style="display:flex; justify-content:space-between; font-size:0.85em; color:var(--gris);">
+                <span>Avancement</span><span id="pct-bloc2">0%</span>
+            </div>
+            <div class="mini-barre">
+                <div class="mini-barre-fill orange" id="barre-bloc2" style="width:0%"></div>
+            </div>
+        </div>
+        <div class="checklist">
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(2)"><span>Commentaire rédigé (21 contentieux, 248K€, 2 cabinets)</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(2)"><span>Facturation et suivi KPIs financiers documentés</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(2)"><span>Preuves : dossiers contentieux (anonymisés)</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(2)"><span>Non-conformité salariale documentée</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(2)"><span>Relu et validé par Corine Flesia</span></div>
+        </div>
+    </div>
+
+    <!-- Bloc 3 -->
+    <div class="bloc">
+        <div class="bloc-header">
+            <div class="bloc-titre">Bloc 3 — Gestion des ressources humaines</div>
+            <span class="statut a-faire">À faire</span>
+        </div>
+        <div class="bloc-avancement">
+            <div style="display:flex; justify-content:space-between; font-size:0.85em; color:var(--gris);">
+                <span>Avancement</span><span id="pct-bloc3">0%</span>
+            </div>
+            <div class="mini-barre">
+                <div class="mini-barre-fill rouge" id="barre-bloc3" style="width:0%"></div>
+            </div>
+        </div>
+        <div class="checklist">
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(3)"><span>Commentaire rédigé (28 agents, DPAE, contrats, paie)</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(3)"><span>Entretiens individuels et KPIs RH documentés</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(3)"><span>Preuves : offres d'emploi rédigées</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(3)"><span>Formation agents (Qui est où) documentée</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(3)"><span>Relu et validé par Corine Flesia</span></div>
+        </div>
+    </div>
+
+    <!-- Bloc 4 -->
+    <div class="bloc">
+        <div class="bloc-header">
+            <div class="bloc-titre">Bloc 4 — Qualité, conformité et gestion des risques</div>
+            <span class="statut a-faire">À faire</span>
+        </div>
+        <div class="bloc-avancement">
+            <div style="display:flex; justify-content:space-between; font-size:0.85em; color:var(--gris);">
+                <span>Avancement</span><span id="pct-bloc4">0%</span>
+            </div>
+            <div class="mini-barre">
+                <div class="mini-barre-fill bleu" id="barre-bloc4" style="width:0%"></div>
+            </div>
+        </div>
+        <div class="checklist">
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(4)"><span>Commentaire rédigé (Certibiocide, URSSAF, conformité)</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(4)"><span>Gestion des risques documentée (21 contentieux)</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(4)"><span>Preuves : certificat Certibiocide</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(4)"><span>Base documentaire (procédures, modèles) référencée</span></div>
+            <div class="checklist-item"><input type="checkbox" onchange="majBloc(4)"><span>Relu et validé par Corine Flesia</span></div>
+        </div>
+    </div>
+
+    <!-- Timeline entretiens -->
+    <div class="section-titre">📅 Entretiens d'accompagnement</div>
+
+    <div class="timeline">
+        <div class="entretien fait">
+            <div class="entretien-card">
+                <div class="entretien-date">✅ Entretien 1 — 12 mai 2026</div>
+                <div class="entretien-detail">Durée : 1h | Accompagnatrice : Corine Flesia<br>
+                Blocs de compétences remplis. Livret envoyé. Feuille d'émargement à renvoyer.</div>
+            </div>
+        </div>
+
+        <div class="entretien prochain">
+            <div class="entretien-card">
+                <div class="entretien-date">🔵 Entretien 2 — Date à fixer</div>
+                <div class="entretien-detail">Objectif : Valider les blocs 1 et 2 finalisés<br>
+                Envoyer le livret la veille du RDV.</div>
+            </div>
+        </div>
+
+        <div class="entretien">
+            <div class="entretien-card">
+                <div class="entretien-date">⏳ Entretiens 3 à 6 — À planifier</div>
+                <div class="entretien-detail">Rythme à définir avec Corine Flesia</div>
+            </div>
+        </div>
+
+        <div class="entretien">
+            <div class="entretien-card" style="border-left: 4px solid var(--or); background: #fffdf0;">
+                <div class="entretien-date" style="color:var(--or);">🏆 Jury — Décembre 2026</div>
+                <div class="entretien-detail">Soutenance devant le jury Ascencia<br>
+                Objectif : valider le Bac+3 Office Manager (RNCP 41686)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="section-titre">📝 Mes notes</div>
+    <div class="notes-zone">
+        <p style="color:var(--gris); font-size:0.9em;">Tes notes personnelles sur ta VAE :</p>
+        <textarea id="notes-texte" placeholder="Ajoute tes notes ici...&#10;- Points à retravailler&#10;- Questions pour Corine Flesia&#10;- Preuves à rassembler..."></textarea>
+        <button class="btn" onclick="sauvegarderNotes()">💾 Sauvegarder les notes</button>
+        <span id="save-msg" style="color:var(--vert); font-size:0.85em; margin-left:10px; display:none;">✓ Sauvegardé !</span>
+    </div>
+
+    <footer>
+        Tracker VAE — Ketty Burel | Mis à jour le <span id="date-maj"></span>
+    </footer>
+
+    <script>
+        // Date mise à jour
+        document.getElementById('date-maj').textContent = new Date().toLocaleDateString('fr-FR');
+
+        // Countdown jury (décembre 2026)
+        function calculerJours() {
+            const jury = new Date('2026-12-01');
+            const auj = new Date();
+            const diff = Math.ceil((jury - auj) / (1000 * 60 * 60 * 24));
+            document.getElementById('jours-restants').textContent = diff > 0 ? diff : '🎓';
+        }
+        calculerJours();
+
+        // Charger les notes sauvegardées
+        function chargerNotes() {
+            const notes = localStorage.getItem('vae_notes');
+            if (notes) document.getElementById('notes-texte').value = notes;
+        }
+
+        // Sauvegarder les notes
+        function sauvegarderNotes() {
+            const notes = document.getElementById('notes-texte').value;
+            localStorage.setItem('vae_notes', notes);
+            const msg = document.getElementById('save-msg');
+            msg.style.display = 'inline';
+            setTimeout(() => msg.style.display = 'none', 2000);
+        }
+
+        // Charger les checkboxes sauvegardées
+        function chargerEtat() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach((cb, i) => {
+                cb.checked = localStorage.getItem('vae_cb_' + i) === 'true';
+                if (cb.checked) cb.closest('.checklist-item, .urgence-item').classList.add('done');
+            });
+        }
+
+        // Sauvegarder état checkbox
+        function sauvegarderEtat() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach((cb, i) => {
+                localStorage.setItem('vae_cb_' + i, cb.checked);
+                if (cb.checked) {
+                    cb.closest('.checklist-item, .urgence-item').classList.add('done');
+                } else {
+                    cb.closest('.checklist-item, .urgence-item').classList.remove('done');
+                }
+            });
+        }
+
+        // Mettre à jour progression d'un bloc
+        function majBloc(numBloc) {
+            sauvegarderEtat();
+            const blocs = document.querySelectorAll('.bloc');
+            const bloc = blocs[numBloc - 1];
+            const cases = bloc.querySelectorAll('.checklist-item input');
+            const cochees = bloc.querySelectorAll('.checklist-item input:checked');
+            const pct = Math.round((cochees.length / cases.length) * 100);
+
+            document.getElementById('pct-bloc' + numBloc).textContent = pct + '%';
+            document.getElementById('barre-bloc' + numBloc).style.width = pct + '%';
+
+            // Mettre à jour statut
+            const statut = bloc.querySelector('.statut');
+            if (pct === 100) {
+                statut.textContent = 'Terminé ✓';
+                statut.className = 'statut fait';
+            } else if (pct > 0) {
+                statut.textContent = 'En cours';
+                statut.className = 'statut en-cours';
+            }
+
+            majProgression();
+        }
+
+        // Mettre à jour progression globale
+        function majProgression() {
+            sauvegarderEtat();
+            const toutes = document.querySelectorAll('input[type="checkbox"]');
+            const cochees = document.querySelectorAll('input[type="checkbox"]:checked');
+            const pct = Math.round((cochees.length / toutes.length) * 100);
+
+            document.getElementById('barre-globale').style.width = pct + '%';
+            document.getElementById('barre-globale').textContent = pct + '%';
+            document.getElementById('pct-globale').textContent = pct + '%';
+        }
+
+        // Init
+        chargerNotes();
+        chargerEtat();
+        majProgression();
+        for (let i = 1; i <= 4; i++) majBloc(i);
+    </script>
+</body>
+</html>
